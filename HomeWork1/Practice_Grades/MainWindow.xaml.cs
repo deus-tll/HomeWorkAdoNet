@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Practice_Grades
 {
@@ -34,7 +20,7 @@ namespace Practice_Grades
 
 		private void UpdateGroupNames()
 		{
-			SqlDataAdapter adapterGroupNames = new SqlDataAdapter("select distinct GroupName from Grades", _connection);
+			SqlDataAdapter adapterGroupNames = new("select distinct GroupName from Grades", _connection);
 			DataTable table = new();
 			adapterGroupNames.Fill(table);
 			cmb_GroupNames.ItemsSource = table.AsDataView();
@@ -69,14 +55,15 @@ namespace Practice_Grades
 			try
 			{
 				_connection = new SqlConnection(CONNECTION_STRING);
+				_connection.Open();
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Connection Failed!\n\n" + ex.Message);
 				return;
 			}
+
 			MessageBox.Show("The Connection Was Successful!");
-			_connection.Open();
 
 
 			UpdateGroupNames();
