@@ -51,7 +51,7 @@ namespace HomeWork_Storage
 
 		public DataTable GetTable(string query) 
 		{
-			if (_connection is null)
+			if (_connection is null || _connection.ConnectionString == "")
 				return new DataTable();
 
 			_adapter?.Dispose();
@@ -63,6 +63,9 @@ namespace HomeWork_Storage
 
 		public DataTable GetData(string table_name)
 		{
+			if (_connection is null || _connection.ConnectionString == "")
+				return new DataTable(table_name);
+			
 			_adapterEditing = new SqlDataAdapter($"select * from [{table_name}]", _connection);
 			_commandBuilder = new SqlCommandBuilder(_adapterEditing);
 			_tableEditing = new DataTable(table_name);

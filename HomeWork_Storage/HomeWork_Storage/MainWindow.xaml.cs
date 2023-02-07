@@ -50,6 +50,7 @@ namespace HomeWork_Storage
 		private void Btn_Disconnect_Click(object sender, RoutedEventArgs e)
 		{
 			DB.DisconnectBase();
+			Cmb_TablesList.ItemsSource = null;
 		}
 
 		private void Btn_Connect_Click(object sender, RoutedEventArgs e)
