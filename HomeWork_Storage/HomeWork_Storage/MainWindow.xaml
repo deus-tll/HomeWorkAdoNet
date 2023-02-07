@@ -1,0 +1,230 @@
+﻿<Window x:Class="HomeWork_Storage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HomeWork_Storage"
+        mc:Ignorable="d"
+        Title="Storage" Height="700" MinHeight="700" Width="1220" MinWidth="1220" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="btn_Query" TargetType="Button">
+            <Setter Property="Content" Value="Make a query"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="100 0 100 2"/>
+            <Setter Property="Grid.Row" Value="1"/>
+        </Style>
+
+        <Style x:Key="txtBlock_Query" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="border_Style">
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="BlueViolet"/>
+        </Style>
+
+        <Style x:Key="btn_Editing" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="50"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.ColumnSpan="2">
+
+            <TabItem Header="Запити" Width="100" Height="25">
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="recordsListQueries" IsReadOnly="True"/>
+
+                    <ListView x:Name="queriesList"
+				              Grid.Column="1">
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Інформація про постачальника, в якого кількість товару на складі найбільша."/>
+                                    <Button x:Name="Btn_ProviderWithMoreProducts"
+                                            Style="{StaticResource btn_Query}"
+                                            Click="Btn_ProviderWithMoreProducts_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Інформація про постачальника, в якого кількість товару на складі найменша."/>
+                                    <Button x:Name="Btn_ProviderWithLessProducts"
+                                            Style="{StaticResource btn_Query}"
+                                            Click="Btn_ProviderWithLessProducts_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Інформація про тип товару з найбільшою кількістю одиниць товару на складі."/>
+                                    <Button x:Name="Btn_TypeOfProductWithMostUnitsCount"
+                                            Style="{StaticResource btn_Query}"
+                                            Click="Btn_TypeOfProductWithMostUnitsCount_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Інформація про тип товарів з найменшою кількістю товарів на складі."/>
+                                    <Button x:Name="Btn_TypeOfProductWithLessProductsCount"
+                                            Style="{StaticResource btn_Query}"
+                                            Click="Btn_TypeOfProductWithLessProductsCount_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Товари, з постачання яких минула задана кількість днів."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.6*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Кількість днів:" FontSize="15" Margin="4" TextAlignment="Right"/>
+
+                                        <TextBox x:Name="TextBox_CountDays" Grid.Column="1" Margin="30 0 150 0" TextAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput="TextBox_CountDays_PreviewTextInput"/>
+
+                                    </Grid>
+                                    
+                                    <Button x:Name="Btn_ProductsFromDeliveryDatePassSpecCountOfDays"
+                                            Grid.Row="2"
+                                            Style="{StaticResource btn_Query}"
+                                            Click="Btn_ProductsFromDeliveryDatePassSpecCountOfDays_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Редагування" Width="100" Height="25">
+                
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="recordsListEditing" IsReadOnly="False"/>
+
+                    <Grid Grid.Column="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.15*"/>
+                            <RowDefinition Height="0.2*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Виберіть таблицю з якою бажаєте виконати операції:"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"/>
+
+                        <ComboBox x:Name="Cmb_TablesList"
+                                  Grid.Row="1"
+                                  Margin="25" 
+                                  FontSize="18"
+                                  HorizontalContentAlignment="Center" 
+                                  VerticalContentAlignment="Center"/>
+
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Button x:Name="Btn_ReadData"
+                                    Content="Зчитати дані з таблиці"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_ReadData_Click"/>
+                            
+                            <Button x:Name="Btn_SaveChanges"
+                                    Grid.Row="1" 
+                                    Content="Зберегти зміни"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_SaveChanges_Click"/>
+                            
+                            <Button x:Name="Btn_UpdateTablesList"
+                                    Grid.Row="2" 
+                                    Content="Оновити список таблиць"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_UpdateTablesList_Click"/>
+
+                        </Grid>
+                        
+                    </Grid>
+                    
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <UniformGrid Grid.Column="1" Grid.Row="1"
+					 Columns="2">
+            <Button x:Name="Btn_Disconnect" Content="Disconnect" 
+					Margin="10" Click="Btn_Disconnect_Click"/>
+            <Button x:Name="Btn_Connect" Content="Connect"
+					Margin="10" Click="Btn_Connect_Click"/>
+        </UniformGrid>
+
+    </Grid>
+</Window>
