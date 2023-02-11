@@ -61,23 +61,23 @@ namespace HomeWork_Storage
 
 		private void Btn_ProviderWithMoreProducts_Click(object sender, RoutedEventArgs e)
 		{
-			string query = "declare @table table([ProviderName] nvarchar(max), [Address]nvarchar(max), [MaxInStock] int);\r\n" +
-				"declare @MaxInStock int;\r\n\r\n" +
-				"insert into @table\r\n" +
-				"select\r\n\t" +
-				"Pv.[Name] as [ProviderName],\r\n\t" +
-				"Pv.[Address],\r\n\t" +
-				"Sum(Pd.[InStock]) as [InStock]\r\n" +
-				"from\r\n\t" +
-				"[Products] as Pd join [Providers] as Pv on\r\n\t" +
-				"Pd.[ProviderID] = Pv.[ID]\r\n" +
-				"group by\r\n\t" +
-				"Pv.[Name],\r\n\t" +
-				"Pv.[Address]\r\n\r\n" +
-				"select @MaxInStock = Max(t.MaxInStock)\r\n" +
-				"from @table as t\r\n\r\n" +
-				"select *\r\n" +
-				"from @table as t\r\n" +
+			string query = "declare @table table([ProviderName] nvarchar(max), [Address]nvarchar(max), [MaxInStock] int); " +
+				"declare @MaxInStock int; " +
+				"insert into @table " +
+				"select " +
+				"Pv.[Name] as [ProviderName], " +
+				"Pv.[Address], " +
+				"Sum(Pd.[InStock]) as [InStock] " +
+				"from " +
+				"[Products] as Pd join [Providers] as Pv on " +
+				"Pd.[ProviderID] = Pv.[ID] " +
+				"group by " +
+				"Pv.[Name], " +
+				"Pv.[Address] " +
+				"select @MaxInStock = Max(t.MaxInStock) " +
+				"from @table as t " +
+				"select * " +
+				"from @table as t " +
 				"where t.[MaxInStock] = @MaxInStock";
 
 			UpdateDataGrid(query);
@@ -85,23 +85,23 @@ namespace HomeWork_Storage
 
 		private void Btn_ProviderWithLessProducts_Click(object sender, RoutedEventArgs e)
 		{
-			string query = "declare @table table([ProviderName] nvarchar(max), [Address]nvarchar(max), [MinInStock] int);\r\n" +
-				"declare @MinInStock int;\r\n\r\n" +
-				"insert into @table\r\n" +
-				"select\r\n\t" +
-				"Pv.[Name] as [ProviderName],\r\n\t" +
-				"Pv.[Address],\r\n\t" +
-				"Sum(Pd.[InStock]) as [InStock]\r\n" +
-				"from\r\n\t" +
-				"[Products] as Pd join [Providers] as Pv on\r\n\t" +
-				"Pd.[ProviderID] = Pv.[ID]\r\n" +
-				"group by\r\n\t" +
-				"Pv.[Name],\r\n\t" +
-				"Pv.[Address]\r\n\r\n" +
-				"select @MinInStock = Min(t.MinInStock)\r\n" +
-				"from @table as t\r\n\r\n" +
-				"select *\r\n" +
-				"from @table as t\r\n" +
+			string query = "declare @table table([ProviderName] nvarchar(max), [Address]nvarchar(max), [MinInStock] int); " +
+				"declare @MinInStock int;  " +
+				"insert into @table " +
+				"select " +
+				"Pv.[Name] as [ProviderName], " +
+				"Pv.[Address], " +
+				"Sum(Pd.[InStock]) as [InStock] " +
+				"from " +
+				"[Products] as Pd join [Providers] as Pv on " +
+				"Pd.[ProviderID] = Pv.[ID] " +
+				"group by " +
+				"Pv.[Name], " +
+				"Pv.[Address]  " +
+				"select @MinInStock = Min(t.MinInStock) " +
+				"from @table as t  " +
+				"select * " +
+				"from @table as t " +
 				"where t.[MinInStock] = @MinInStock";
 
 			UpdateDataGrid(query);
@@ -109,21 +109,21 @@ namespace HomeWork_Storage
 
 		private void Btn_TypeOfProductWithMostUnitsCount_Click(object sender, RoutedEventArgs e)
 		{
-			string query = "declare @table table([TypeName] nvarchar(max), [MaxUnits] int);\r\n" +
-				"declare @MaxUnits int;\r\n\r\n" +
-				"insert into @table\r\n" +
-				"select \r\n\t" +
-				"T.[Name] as [Type Name],\r\n\t" +
-				"Sum(P.[ID]) as [Units of the product]\r\n" +
-				"from\r\n\t" +
-				"[Products] as P join [Types] as T on \r\n\t" +
-				"P.[TypeID] = T.[ID]\r\n" +
-				"group by \r\n\t" +
-				"T.[Name];\r\n\r\n" +
-				"select @MaxUnits = Max(t.[MaxUnits])\r\n" +
-				"from @table as t;\r\n\r\n" +
-				"select *\r\n" +
-				"from @table as t\r\n" +
+			string query = "declare @table table([TypeName] nvarchar(max), [MaxUnits] int); " +
+				"declare @MaxUnits int; " +
+				"insert into @table " +
+				"select  " +
+				"T.[Name] as [Type Name], " +
+				"Sum(P.[ID]) as [Units of the product] " +
+				"from " +
+				"[Products] as P join [Types] as T on  " +
+				"P.[TypeID] = T.[ID] " +
+				"group by " +
+				"T.[Name]; " +
+				"select @MaxUnits = Max(t.[MaxUnits]) " +
+				"from @table as t;  " +
+				"select * " +
+				"from @table as t " +
 				"where t.[MaxUnits] = @MaxUnits;";
 
 			UpdateDataGrid(query);
@@ -131,21 +131,21 @@ namespace HomeWork_Storage
 
 		private void Btn_TypeOfProductWithLessProductsCount_Click(object sender, RoutedEventArgs e)
 		{
-			string query = "declare @table table([TypeName] nvarchar(max), [MinInStock] int);\r\n" +
-				"declare @MinInStock int;\r\n\r\n" +
-				"insert into @table\r\n" +
-				"select \r\n\t" +
-				"T.[Name] as [TypeName],\r\n\t" +
-				"Sum(P.[InStock]) as [InStock]\r\n" +
-				"from\r\n\t" +
-				"[Products] as P join [Types] as T on \r\n\t" +
-				"P.[TypeID] = T.[ID]\r\n" +
-				"group by \r\n\t" +
-				"T.[Name]\r\n\r\n" +
-				"select @MinInStock = Min(t.MinInStock)\r\n" +
-				"from @table as t\r\n\r\n" +
-				"select *\r\n" +
-				"from @table as t\r\n" +
+			string query = "declare @table table([TypeName] nvarchar(max), [MinInStock] int); " +
+				"declare @MinInStock int;  " +
+				"insert into @table " +
+				"select  " +
+				"T.[Name] as [TypeName], " +
+				"Sum(P.[InStock]) as [InStock] " +
+				"from " +
+				"[Products] as P join [Types] as T on " +
+				"P.[TypeID] = T.[ID] " +
+				"group by  " +
+				"T.[Name]  " +
+				"select @MinInStock = Min(t.MinInStock) " +
+				"from @table as t  " +
+				"select * " +
+				"from @table as t " +
 				"where t.[MinInStock] = @MinInStock";
 
 			UpdateDataGrid(query);
@@ -153,19 +153,19 @@ namespace HomeWork_Storage
 
 		private void Btn_ProductsFromDeliveryDatePassSpecCountOfDays_Click(object sender, RoutedEventArgs e)
 		{
-			string query = "select\r\n\t" +
-				"PD.[Name] as [Product`s Name],\r\n\t" +
-				"PV.[Name] as [Provider`s Name],\r\n\t" +
-				"T.[Name] as [Type Name],\r\n\t" +
-				"PD.[InStock] as [In Stock],\r\n\t" +
-				"PD.[CostPrice] as [Cost Price],\r\n\t" +
-				"PD.[DeliveryDate] as [Delivery Date]\r\n" +
-				"from\r\n\t" +
-				"[Products] as PD join [Providers] as PV on \r\n\t" +
-				"PD.[ProviderID] = PV.[ID]\r\n\r\n\t" +
-				"join [Types] as T on\r\n\t" +
-				"PD.[TypeID] = T.[ID]\r\n" +
-				"where\r\n\t" +
+			string query = "select " +
+				"PD.[Name] as [Product`s Name], " +
+				"PV.[Name] as [Provider`s Name], " +
+				"T.[Name] as [Type Name], " +
+				"PD.[InStock] as [In Stock], " +
+				"PD.[CostPrice] as [Cost Price], " +
+				"PD.[DeliveryDate] as [Delivery Date] " +
+				"from " +
+				"[Products] as PD join [Providers] as PV on  " +
+				"PD.[ProviderID] = PV.[ID]  " +
+				"join [Types] as T on " +
+				"PD.[TypeID] = T.[ID] " +
+				"where " +
 				$"DateDiff(day, PD.[DeliveryDate], getdate()) > {TextBox_CountDays.Text}";
 
 			UpdateDataGrid(query);
