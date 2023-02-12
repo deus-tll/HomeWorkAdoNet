@@ -120,9 +120,10 @@ go
 
 create table [Stationeries](
 	[ID] int not null identity(1,1),
-	[Name] nvarchar(300) not null,
+	[Name] nvarchar(300) not null unique,
 	[Cost] money not null default(0.0),
 	[Units] int not null default(1),
+	[SellingPrice] money not null default(0.0),
 	[TypeID] int,
 	
 
@@ -130,6 +131,7 @@ create table [Stationeries](
 	constraint CK_Stationeries_Name check([Name] <> ''),
 	constraint CK_Stationeries_Cost check([Cost] >= 0.0 ),
 	constraint CK_Stationeries_Units check([Units] > 0 ),
+	constraint CK_Stationeries_SellingPrice check([SellingPrice] >= 0.0),
 	constraint FK_Stationeries_TypeID foreign key([TypeID]) references [Types]([ID])
 );
 go
@@ -209,10 +211,40 @@ create table [Sales](
 );
 
 
+--create trigger MakeSaleTrigger
+--on [Sales]
+--for insert
+--as
+--begin
+--	declare @nameStationery nvarchar(300), @offtake smallint, @units int;
+
+--	select
+--		@offtake = i.[Offtake],
+--		@nameStationery = i.[Name]
+--	from
+--		inserted as i
+
+--	select
+--		@units = S.[Units]
+--	from
+--		[Stationeries] as S
+
+--	if(@units - @offtake >= 0)
+--	begin
+--		update [Stationeries] set [Stationeries].Units = @units - @offtake where [Name] = @nameStationery;
+--	end
+--	else
+--	begin
+--		raiserror('There are not enough units of the product in stock',0,1)
+--		rollback tran;
+--	end
+--end
+
+
 create table [BuyerCompaniesArchive](
 	[ID] int not null identity(1,1),
-	[Name] nvarchar(max) not null,
-	[Address] nvarchar(max),
+	[Name] nvarchar(150) not null,
+	[Address] nvarchar(150),
 
 	constraint PK_BuyerCompaniesArchive_ID primary key([ID]),
 	constraint CK_BuyerCompaniesArchive_Name check([Name] <> ''),
@@ -222,8 +254,8 @@ go
 
 create table [ManagersArchive](
 	[ID] int not null identity(1,1),
-	[Name] nvarchar(max) not null,
-	[Surname] nvarchar(max) not null,
+	[Name] nvarchar(150) not null,
+	[Surname] nvarchar(150) not null,
 
 	constraint PK_ManagersArchive_ID primary key([ID]),
 	constraint CK_ManagersArchive_Name check([Name] <> ''),
