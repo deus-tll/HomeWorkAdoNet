@@ -56,7 +56,7 @@ namespace HomeWork2_VegetablesFruits
 			{
 				_adapter.SelectCommand = _connection.CreateCommand();
 				_adapter.SelectCommand.CommandText = query;
-				await Task.Run<DataTable>(() =>
+				return await Task.Run<DataTable>(() =>
 				{
 					DataTable t = new();
 					_adapter.Fill(t);
