@@ -6,93 +6,464 @@
 		xmlns:local="clr-namespace:HomeWork2_VegetablesFruits"
 		mc:Ignorable="d"
 		Title="MainWindow" Height="700" MinHeight="700" Width="1220" MinWidth="1220" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <Style x:Key="btn_Query" TargetType="Button">
-            <Setter Property="Content" Value="Make a query"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="Margin" Value="100 0 100 2"/>
-            <Setter Property="Grid.Row" Value="1"/>
-        </Style>
+	<Window.Resources>
+		<Style x:Key="btn_Query" TargetType="Button">
+			<Setter Property="Content" Value="Make a query"/>
+			<Setter Property="FontSize" Value="13"/>
+			<Setter Property="Margin" Value="100 0 100 2"/>
+			<Setter Property="Grid.Row" Value="1"/>
+		</Style>
 
-        <Style x:Key="txtBlock_Query" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Grid.Row" Value="0"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Padding" Value="2"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-        </Style>
+		<Style x:Key="txtBlock_Query" TargetType="TextBlock">
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="Grid.Row" Value="0"/>
+			<Setter Property="TextWrapping" Value="Wrap"/>
+			<Setter Property="Padding" Value="2"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
 
-        <Style TargetType="Border" x:Key="border_Style">
-            <Setter Property="Margin" Value="0.5"/>
-            <Setter Property="CornerRadius" Value="5"/>
-            <Setter Property="Background" Value="BlueViolet"/>
+		<Style TargetType="Border" x:Key="border_Style">
+			<Setter Property="Margin" Value="0.5"/>
+			<Setter Property="CornerRadius" Value="5"/>
+			<Setter Property="Background" Value="BlueViolet"/>
+		</Style>
+
+        <Style x:Key="btn_Editing" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="50"/>
         </Style>
     </Window.Resources>
 
-    <Grid>
+	<Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"/>
             <RowDefinition/>
             <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.6*"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="0.6*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <TextBlock x:Name="TxtBlock_TimeTakenByRequest"/>
 
-            <TextBlock Text="Select Provider:" 
-                       FontSize="15"
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"/>
-            
-            <ComboBox x:Name="Cmb_Providers"
-                      IsReadOnly="True"
-                      Grid.Column="1" 
-                      Margin="8"
-                      SelectionChanged="Cmb_Providers_SelectionChanged"/>
-            
-            <Button x:Name="Btn_GetProviders"
-                    Content="Get Providers" 
-                    Grid.Column="2"
-                    Margin="8"
-                    Click="Btn_GetProviders_Click"/>
-            
-            <TextBlock Text="Connection String:" 
-                       Grid.Row="1"
-                       FontSize="15"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-            
-            <TextBox x:Name="TxtBox_ConnectionString"
-                     Grid.Row="1"
-                     Grid.Column="1"
-                     Grid.ColumnSpan="2"
-                     Margin="8"
-                     IsReadOnly="True" 
-                     TextAlignment="Center"/>
+        <TabControl Grid.Row="1" 
+                    Grid.ColumnSpan="2">
 
-        </Grid>
+			<TabItem Header="Запити" Width="100" Height="25">
+
+				<Grid Background="#FFE5E5E5">
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+
+					<DataGrid x:Name="recordsList"/>
+
+					<ListView x:Name="queriesList"
+							  Grid.Column="1">
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Вся інформація із таблиці з овочами та фруктами"/>
+									<Button x:Name="Btn_ShowAllInfo"
+								Style="{StaticResource btn_Query}"
+								Click="Btn_ShowAllInfo_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Назви усіх овочів та фруктів"/>
+									<Button x:Name="Btn_ShowAllProducts"
+								Style="{StaticResource btn_Query}"
+								Click="Btn_ShowAllProducts_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Усі кольори овочів та фруктів"/>
+									<Button x:Name="Btn_ShowAllColors"
+								Style="{StaticResource btn_Query}"
+								Click="Btn_ShowAllColors_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
 
 
-        <UniformGrid Grid.Column="1" Grid.Row="1"
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Максимальна калорійність"/>
+									<Button x:Name="Btn_ShowMaxCaloricContent"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowMaxCaloricContent_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Мінімальна калорійність"/>
+									<Button x:Name="Btn_ShowMinCaloricContent"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowMinCaloricContent_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Середня калорійність"/>
+									<Button x:Name="Btn_ShowAvgCaloricContent"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowAvgCaloricContent_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Кількість овочів"/>
+									<Button x:Name="Btn_ShowCountVegetables"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowCountVegetables_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Кількість фруктів"/>
+									<Button x:Name="Btn_ShowCountFruits"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowCountFruits_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Овочі та фрукти з калорійністю нижче вказаної"/>
+									<Grid Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="0.1*"/>
+											<ColumnDefinition/>
+										</Grid.ColumnDefinitions>
+
+										<TextBlock TextAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontSize="15"
+									   Margin="10 0 10 0"
+									   Text="{Binding ElementName=sliderCaloricContent1, Path=Value, StringFormat={}{0:0.00}}"/>
+
+										<Slider x:Name="sliderCaloricContent1"
+									Grid.Column="1"
+									Minimum="1"
+									Maximum="1000"
+									Margin="10 0 10 0"/>
+									</Grid>
+									<Button x:Name="Btn_ShowVegetablesFruitsWithCaloricContentLessThanSpec"
+								Grid.Row="2"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowVegetablesFruitsWithCaloricContentLessThanSpec_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Овочі та фрукти з калорійністю вище вказаної"/>
+									<Grid Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="0.1*"/>
+											<ColumnDefinition/>
+										</Grid.ColumnDefinitions>
+
+										<TextBlock TextAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontSize="15"
+									   Margin="10 0 10 0"
+									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+
+										<Slider x:Name="sliderCaloricContent2"
+									Grid.Column="1"
+									Minimum="1"
+									Maximum="1000"
+									Margin="10 0 10 0"/>
+									</Grid>
+
+									<Button x:Name="Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec"
+								Grid.Row="2"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Овочі та фрукти з калорійністю у вказаному діапазоні"/>
+
+									<Grid Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="0.38*"/>
+											<ColumnDefinition Width="0.2*"/>
+											<ColumnDefinition/>
+										</Grid.ColumnDefinitions>
+
+										<Grid.RowDefinitions>
+											<RowDefinition/>
+											<RowDefinition/>
+										</Grid.RowDefinitions>
+
+										<TextBlock Text="Початок діпазону" FontSize="15" TextAlignment="Center" Margin="1.5"/>
+
+										<TextBlock Grid.Column="1"
+									   TextAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontSize="15"
+									   Margin="1.5"
+									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+
+										<Slider x:Name="sliderStartRange"
+									Grid.Column="2"
+									Minimum="1"
+									Maximum="1000"
+									Margin="1.5"/>
+
+
+										<TextBlock Grid.Row="1" Text="Кінець діпазону" FontSize="15" TextAlignment="Center" Margin="1.5"/>
+
+										<TextBlock Grid.Column="1"
+									   Grid.Row="1"
+									   TextAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontSize="15"
+									   Margin="1.5"
+									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+
+										<Slider x:Name="sliderEndRange"
+									Grid.Column="2"
+									Grid.Row="1"
+									Minimum="1"
+									Maximum="1000"
+									Margin="1.5"/>
+									</Grid>
+
+									<Button x:Name="Btn_ShowVegetablesFruitsCaloricContentInRange"
+								Grid.Row="2"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowVegetablesFruitsCaloricContentInRange_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+
+						<ListViewItem HorizontalContentAlignment="Stretch">
+							<Border Style="{StaticResource border_Style}">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition/>
+										<RowDefinition/>
+									</Grid.RowDefinitions>
+									<TextBlock Style="{StaticResource txtBlock_Query}" Text="Усі овочі та фрукти жовтого або червоного кольору"/>
+									<Button x:Name="Btn_ShowVegetablesFruitsWithColorRedOrYellow"
+								Style="{StaticResource btn_Query}"
+								Click= "Btn_ShowVegetablesFruitsWithColorRedOrYellow_Click"/>
+								</Grid>
+							</Border>
+						</ListViewItem>
+						
+					</ListView>
+
+				</Grid>
+				
+			</TabItem>
+
+            <TabItem Header="Редагування" Width="100" Height="25">
+
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="recordsListEditing" IsReadOnly="False"/>
+
+                    <Grid Grid.Column="1">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.15*"/>
+                            <RowDefinition Height="0.2*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Виберіть таблицю з якою бажаєте виконати операції:"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"/>
+
+                        <ComboBox x:Name="Cmb_TablesList"
+                                  Grid.Row="1"
+                                  Margin="25" 
+                                  FontSize="18"
+                                  HorizontalContentAlignment="Center" 
+                                  VerticalContentAlignment="Center"/>
+
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Button x:Name="Btn_ReadData"
+                                    Content="Зчитати дані з таблиці"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_ReadData_Click"/>
+
+                            <Button x:Name="Btn_SaveChanges"
+                                    Grid.Row="1" 
+                                    Content="Зберегти зміни"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_SaveChanges_Click"/>
+
+                            <Button x:Name="Btn_UpdateTablesList"
+                                    Grid.Row="2" 
+                                    Content="Оновити список таблиць"
+                                    Style="{StaticResource btn_Editing}"
+                                    Click="Btn_UpdateTablesList_Click"/>
+
+                        </Grid>
+
+                    </Grid>
+
+                </Grid>
+                
+            </TabItem>
+			
+		</TabControl>
+
+
+		
+
+
+		<Grid Grid.Row="2">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.6*"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="0.6*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+
+			<TextBlock Text="Select Provider:" 
+					   FontSize="15"
+					   HorizontalAlignment="Center" 
+					   VerticalAlignment="Center"/>
+			
+			<ComboBox x:Name="Cmb_Providers"
+					  IsReadOnly="True"
+					  Grid.Column="1" 
+					  Margin="8"
+					  SelectionChanged="Cmb_Providers_SelectionChanged"/>
+			
+			<Button x:Name="Btn_GetProviders"
+					Content="Get Providers" 
+					Grid.Column="2"
+					Margin="8"
+					Click="Btn_GetProviders_Click"/>
+			
+			<TextBlock Text="Connection String:" 
+					   Grid.Row="1"
+					   FontSize="15"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"/>
+			
+			<TextBox x:Name="TxtBox_ConnectionString"
+					 Grid.Row="1"
+					 Grid.Column="1"
+					 Grid.ColumnSpan="2"
+					 Margin="8"
+					 IsReadOnly="True" 
+					 TextAlignment="Center"/>
+
+		</Grid>
+
+
+		<UniformGrid Grid.Column="1" Grid.Row="2"
 					 Columns="2">
-            <Button x:Name="Btn_Disconnect" Content="Disconnect" 
+			<Button x:Name="Btn_Disconnect" Content="Disconnect" 
 					Margin="25" Click="Btn_Disconnect_Click"/>
-            <Button x:Name="Btn_Connect" Content="Connect"
+			<Button x:Name="Btn_Connect" Content="Connect"
 					Margin="25" Click="Btn_Connect_Click"/>
-        </UniformGrid>
+		</UniformGrid>
 
 
-    </Grid>
+	</Grid>
 </Window>

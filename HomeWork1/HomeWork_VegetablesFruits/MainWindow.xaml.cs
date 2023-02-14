@@ -90,7 +90,7 @@ namespace HomeWork_VegetablesFruits
 
 		private void Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec_Click(object sender, RoutedEventArgs e)
 		{
-			UpdateDataGrid($"select * from VegetablesFruits where CaloricContent > {sliderCaloricContent1.Value}");
+			UpdateDataGrid($"select * from VegetablesFruits where CaloricContent > {sliderCaloricContent2.Value}");
 		}
 
 		private void Btn_ShowVegetablesFruitsCaloricContentInRange_Click(object sender, RoutedEventArgs e)
