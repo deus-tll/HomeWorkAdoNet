@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using System.Data.SqlClient;
 
 namespace HomeWork2_VegetablesFruits
@@ -44,11 +40,11 @@ namespace HomeWork2_VegetablesFruits
 			{
 				_connection = _factory?.CreateConnection();
 
-				if (_connection is not null)
-				{
-					_connection.ConnectionString = _connectionString;
-					await _connection.OpenAsync();
-				}
+				if (_connection is null)
+					throw new Exception("Connection wasn`t created.");
+				
+				_connection.ConnectionString = _connectionString;
+				await _connection.OpenAsync();
 			}
 			catch (Exception ex)
 			{
