@@ -55,6 +55,8 @@ namespace HomeWork2_VegetablesFruits
 		{
 			Cmb_Providers.ItemsSource = null;
 			List<string> providers = new();
+
+			Btn_GetProviders.IsEnabled = false;
 			try
 			{
 				providers = await VegetablesFruitsDB.GetProvidersList();
@@ -62,6 +64,8 @@ namespace HomeWork2_VegetablesFruits
 			finally
 			{
 				Cmb_Providers.ItemsSource = providers;
+				Cmb_Providers.SelectedItem = Cmb_Providers.Items[0];
+				Btn_GetProviders.IsEnabled = true;
 			}
 		}
 
@@ -204,11 +208,11 @@ namespace HomeWork2_VegetablesFruits
 			if (Cmb_TablesList.Items.Count == 0)
 				return;
 
-			string? select = Cmb_TablesList.SelectedValue.ToString();
+			string? table_name = Cmb_TablesList.SelectedValue.ToString();
 
-			if (select is not null)
+			if (table_name is not null)
 			{
-				DataTable? resultTable = await DB.GetTableByQuery(select);
+				DataTable? resultTable = await DB.GetTableByTableName(table_name);
 
 				if (resultTable is not null)
 					recordsListEditing.ItemsSource = resultTable.AsDataView();

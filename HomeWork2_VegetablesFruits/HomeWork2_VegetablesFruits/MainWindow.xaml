@@ -236,24 +236,24 @@
 											<ColumnDefinition/>
 										</Grid.ColumnDefinitions>
 
-										<TextBlock TextAlignment="Center"
-									   HorizontalAlignment="Center"
-									   FontSize="15"
-									   Margin="10 0 10 0"
-									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+                                        <TextBlock TextAlignment="Center"
+												   HorizontalAlignment="Center"
+												   FontSize="15"
+												   Margin="10 0 10 0"
+												   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
 
-										<Slider x:Name="sliderCaloricContent2"
-									Grid.Column="1"
-									Minimum="1"
-									Maximum="1000"
-									Margin="10 0 10 0"/>
-									</Grid>
+                                        <Slider x:Name="sliderCaloricContent2"
+												Grid.Column="1"
+												Minimum="1"
+												Maximum="1000"
+												Margin="10 0 10 0"/>
+                                    </Grid>
 
-									<Button x:Name="Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec"
-								Grid.Row="2"
-								Style="{StaticResource btn_Query}"
-								Click= "Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec_Click"/>
-								</Grid>
+                                    <Button x:Name="Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec"
+											Grid.Row="2"
+											Style="{StaticResource btn_Query}"
+											Click= "Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec_Click"/>
+                                </Grid>
 							</Border>
 						</ListViewItem>
 
@@ -279,38 +279,45 @@
 											<RowDefinition/>
 										</Grid.RowDefinitions>
 
-										<TextBlock Text="Початок діпазону" FontSize="15" TextAlignment="Center" Margin="1.5"/>
+										<TextBlock Text="Початок діпазону" 
+                                                   FontSize="15"
+                                                   TextAlignment="Center" 
+                                                   Margin="1.5"/>
 
 										<TextBlock Grid.Column="1"
-									   TextAlignment="Center"
-									   HorizontalAlignment="Center"
-									   FontSize="15"
-									   Margin="1.5"
-									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+												   TextAlignment="Center"
+												   HorizontalAlignment="Center"
+												   FontSize="15"
+												   Margin="1.5"
+												   Text="{Binding ElementName=sliderStartRange, Path=Value, StringFormat={}{0:0.00}}"/>
 
 										<Slider x:Name="sliderStartRange"
-									Grid.Column="2"
-									Minimum="1"
-									Maximum="1000"
-									Margin="1.5"/>
+												Grid.Column="2"
+												Minimum="1"
+												Maximum="1000"
+												Margin="1.5"/>
 
 
-										<TextBlock Grid.Row="1" Text="Кінець діпазону" FontSize="15" TextAlignment="Center" Margin="1.5"/>
+										<TextBlock Grid.Row="1"
+                                                   Text="Кінець діпазону"
+                                                   FontSize="15" 
+                                                   TextAlignment="Center"
+                                                   Margin="1.5"/>
 
 										<TextBlock Grid.Column="1"
-									   Grid.Row="1"
-									   TextAlignment="Center"
-									   HorizontalAlignment="Center"
-									   FontSize="15"
-									   Margin="1.5"
-									   Text="{Binding ElementName=sliderCaloricContent2, Path=Value, StringFormat={}{0:0.00}}"/>
+												   Grid.Row="1"
+												   TextAlignment="Center"
+												   HorizontalAlignment="Center"
+												   FontSize="15"
+												   Margin="1.5"
+												   Text="{Binding ElementName=sliderEndRange, Path=Value, StringFormat={}{0:0.00}}"/>
 
 										<Slider x:Name="sliderEndRange"
-									Grid.Column="2"
-									Grid.Row="1"
-									Minimum="1"
-									Maximum="1000"
-									Margin="1.5"/>
+												Grid.Column="2"
+												Grid.Row="1"
+												Minimum="1"
+												Maximum="1000"
+												Margin="1.5"/>
 									</Grid>
 
 									<Button x:Name="Btn_ShowVegetablesFruitsCaloricContentInRange"
@@ -369,7 +376,7 @@
                         <ComboBox x:Name="Cmb_TablesList"
                                   Grid.Row="1"
                                   Margin="25" 
-                                  FontSize="18"
+                                  FontSize="16"
                                   HorizontalContentAlignment="Center" 
                                   VerticalContentAlignment="Center"/>
 
@@ -413,9 +420,9 @@
 
 		<Grid Grid.Row="2">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="0.6*"/>
+				<ColumnDefinition Width="0.4*"/>
 				<ColumnDefinition/>
-				<ColumnDefinition Width="0.6*"/>
+				<ColumnDefinition Width="0.5*"/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
 				<RowDefinition/>
@@ -423,7 +430,7 @@
 			</Grid.RowDefinitions>
 
 			<TextBlock Text="Select Provider:" 
-					   FontSize="15"
+					   FontSize="14"
 					   HorizontalAlignment="Center" 
 					   VerticalAlignment="Center"/>
 			
@@ -441,7 +448,7 @@
 			
 			<TextBlock Text="Connection String:" 
 					   Grid.Row="1"
-					   FontSize="15"
+					   FontSize="14"
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"/>
 			
@@ -451,7 +458,8 @@
 					 Grid.ColumnSpan="2"
 					 Margin="8"
 					 IsReadOnly="True" 
-					 TextAlignment="Center"/>
+					 TextAlignment="Center"
+                     VerticalContentAlignment="Center"/>
 
 		</Grid>
 
