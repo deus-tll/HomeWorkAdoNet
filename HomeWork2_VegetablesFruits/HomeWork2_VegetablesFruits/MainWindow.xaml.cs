@@ -25,7 +25,7 @@ namespace HomeWork2_VegetablesFruits
 	public partial class MainWindow : Window
 	{
 		private readonly VegetablesFruitsDB DB = new();
-		private Stopwatch _timer;
+		private Stopwatch? _timer;
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -58,6 +58,8 @@ namespace HomeWork2_VegetablesFruits
 
 			if (dataView is not null)
 				recordsList.ItemsSource = dataView;
+
+			StopTimer();
 		}
 
 		private async void Btn_GetProviders_Click(object sender, RoutedEventArgs e)
@@ -102,9 +104,12 @@ namespace HomeWork2_VegetablesFruits
 
 		private void StopTimer()
 		{
-			_timer.Stop();
-			TimeSpan timeTaken = _timer.Elapsed;
-			TxtBlock_TimeTakenByRequest.Text = $"Time taken by executing request: {timeTaken.ToString(@"ss\.fffffff")}";
+			if (_timer is not null)
+			{
+				_timer.Stop();
+				TimeSpan timeTaken = _timer.Elapsed;
+				TxtBlock_TimeTakenByRequest.Text = $"Time taken by executing request: {timeTaken.ToString(@"ss\.fffffff")}";
+			}
 		}
 
 		private async void Btn_ShowAllInfo_Click(object sender, RoutedEventArgs e)
@@ -113,8 +118,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowAllInfo();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowAllProducts_Click(object sender, RoutedEventArgs e)
@@ -123,8 +126,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowAllProducts();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowAllColors_Click(object sender, RoutedEventArgs e)
@@ -133,8 +134,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowAllColors();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowMaxCaloricContent_Click(object sender, RoutedEventArgs e)
@@ -143,8 +142,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowMaxCaloricContent();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowMinCaloricContent_Click(object sender, RoutedEventArgs e)
@@ -153,8 +150,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowMinCaloricContent();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowAvgCaloricContent_Click(object sender, RoutedEventArgs e)
@@ -163,8 +158,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowAvgCaloricContent();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowCountVegetables_Click(object sender, RoutedEventArgs e)
@@ -173,8 +166,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowCountVegetables();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowCountFruits_Click(object sender, RoutedEventArgs e)
@@ -183,8 +174,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowCountFruits();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowVegetablesFruitsWithCaloricContentLessThanSpec_Click(object sender, RoutedEventArgs e)
@@ -193,8 +182,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowVegetablesFruitsWithCaloricContentLessThanSpec(sliderCaloricContent1.Value.ToString());
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowVegetablesFruitsWithCaloricContentMoreThanSpec_Click(object sender, RoutedEventArgs e)
@@ -203,8 +190,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowVegetablesFruitsWithCaloricContentMoreThanSpec(sliderCaloricContent2.Value.ToString());
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowVegetablesFruitsCaloricContentInRange_Click(object sender, RoutedEventArgs e)
@@ -213,8 +198,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowVegetablesFruitsCaloricContentInRange(sliderStartRange.Value.ToString(), sliderEndRange.Value.ToString()) ;
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ShowVegetablesFruitsWithColorRedOrYellow_Click(object sender, RoutedEventArgs e)
@@ -223,8 +206,6 @@ namespace HomeWork2_VegetablesFruits
 
 			DataView? dataView = await DB.Query_ShowVegetablesFruitsWithColorRedOrYellow();
 			UpdateDataGrid(dataView);
-
-			StopTimer();
 		}
 
 		private async void Btn_ReadData_Click(object? sender, RoutedEventArgs? e)
