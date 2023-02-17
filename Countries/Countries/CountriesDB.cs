@@ -14,7 +14,7 @@ namespace Countries
 			_dbContext = new DataContext(CONNECTION_STRING);
 
 		public IEnumerable GetAllInfo() =>
-			_dbContext.GetTable<Country>().ToList();
+			_dbContext.GetTable<Country>();
 
 
 		public IEnumerable GetCountriesNames() =>
@@ -23,42 +23,42 @@ namespace Countries
 
 
 		public IEnumerable GetCapitalsNames() =>
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			select new { Capitals = c.Capital };
 
 
 		public IEnumerable GetEuropeanCountriesNames() =>
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.PartOfTheWorld == "Europe"
 			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesNamesWithAreaMoreThanSpec(int value) => 
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.Area > value
 			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesWhereNameContains_A_U() => 
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.Name.ToLower().Contains('a') && c.Name.ToLower().Contains('u')
 			select c;
 
 
 		public IEnumerable GetCountriesWhereNameContains_A() => 
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.Name.ToLower().Contains('a') 
 			select c;
 
 
 		public IEnumerable GetCountriesNamesWithinSpecRangeByArea(int StartRange, int EndRange) =>
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.Area.Between(StartRange, EndRange) || c.Area.Between(EndRange, StartRange)
 			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesNamesWithPopulationMoreThanSpec(int value) =>
-			from c in _dbContext.GetTable<Country>().ToList()
+			from c in _dbContext.GetTable<Country>()
 			where c.Population > value
 			select new { Countries = c.Name };
 
