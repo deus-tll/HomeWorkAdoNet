@@ -54,7 +54,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="recordsListQueries" IsReadOnly="True"/>
+                    <DataGrid x:Name="recordsListQueries"
+                              IsReadOnly="True"/>
 
                     <ListView x:Name="queriesList"
 				              Grid.Column="1">
