@@ -19,24 +19,24 @@ namespace Countries
 
 		public IEnumerable GetCountriesNames() =>
 			from c in _dbContext.GetTable<Country>()
-			select new { CountryName = c.Name };
+			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCapitalsNames() =>
 			from c in _dbContext.GetTable<Country>().ToList()
-			select new { CapitalName = c.Capital };
+			select new { Capitals = c.Capital };
 
 
 		public IEnumerable GetEuropeanCountriesNames() =>
 			from c in _dbContext.GetTable<Country>().ToList()
 			where c.PartOfTheWorld == "Europe"
-			select new { CountryName = c.Name };
+			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesNamesWithAreaMoreThanSpec(int value) => 
 			from c in _dbContext.GetTable<Country>().ToList()
 			where c.Area > value
-			select new { CountryName = c.Name };
+			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesWhereNameContains_A_U() => 
@@ -54,13 +54,13 @@ namespace Countries
 		public IEnumerable GetCountriesNamesWithinSpecRangeByArea(int StartRange, int EndRange) =>
 			from c in _dbContext.GetTable<Country>().ToList()
 			where c.Area.Between(StartRange, EndRange) || c.Area.Between(EndRange, StartRange)
-			select new { CountryName = c.Name };
+			select new { Countries = c.Name };
 
 
 		public IEnumerable GetCountriesNamesWithPopulationMoreThanSpec(int value) =>
 			from c in _dbContext.GetTable<Country>().ToList()
 			where c.Population > value
-			select new { CountryName = c.Name };
+			select new { Countries = c.Name };
 
 
 		public IEnumerable GetTop5CountriesByArea() => 
