@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Linq;
+﻿using System.Data.Linq;
 using System.Linq;
 using System.Collections;
-using System.Linq.Expressions;
 using System.Data;
 
 namespace Countries
@@ -42,11 +37,6 @@ namespace Countries
 			from c in _dbContext.GetTable<Country>().ToList()
 			where c.Area > value
 			select new { CountryName = c.Name };
-
-
-
-
-
 
 
 		public IEnumerable GetCountriesWhereNameContains_A_U() => 
