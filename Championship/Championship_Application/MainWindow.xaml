@@ -262,7 +262,7 @@
                 
             </TabItem>
             
-            <TabItem Header="Перегляд" Width="100" Height="25">
+            <TabItem Header="Редагування" Width="100" Height="25">
 
                 <Grid Background="#FFE5E5E5">
 
