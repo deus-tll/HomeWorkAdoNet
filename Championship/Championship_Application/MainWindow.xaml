@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Championship_Application"
         mc:Ignorable="d"
-        Title="Storage" Height="700" MinHeight="700" Width="1500" MinWidth="1500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Чемпіонат Іспанії з футболу" Height="700" MinHeight="700" Width="1500" MinWidth="1500" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="btn_Query" TargetType="Button">
-            <Setter Property="Content" Value="Make a query"/>
+            <Setter Property="Content" Value="Виконати і показати"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Margin" Value="100 0 100 2"/>
             <Setter Property="Grid.Row" Value="1"/>
@@ -22,6 +22,12 @@
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
 
+        <Style x:Key="txtBlock_Fields" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
         <Style TargetType="Border" x:Key="border_Style">
             <Setter Property="Margin" Value="0.5"/>
             <Setter Property="CornerRadius" Value="5"/>
@@ -29,8 +35,16 @@
         </Style>
 
         <Style x:Key="btn_Editing" TargetType="Button">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="50"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style x:Key="TextBox_Style" TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
         </Style>
     </Window.Resources>
     
@@ -38,6 +52,216 @@
 
         <TabControl>
 
+            <TabItem Header="Пошук та запити" Width="120" Height="25">
+
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="Dgv_RecordsListQueries"
+				              IsReadOnly="True"
+				              Margin="15"/>
+
+                    <ListView x:Name="queriesList"
+				              Grid.Column="1"
+				              Margin="15">
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Пошук інформації про команду за назвою."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.6*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Назва команди:" FontSize="15" Margin="4" TextAlignment="Right"/>
+
+                                        <TextBox x:Name="TextBox_FindTeamByName" Grid.Column="1" Margin="30 0 150 0" TextAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_FindTeamByName"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_FindTeamByName_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Пошук команд за назвою міста."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.6*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Назва міста:" FontSize="15" Margin="4" TextAlignment="Right"/>
+
+                                        <TextBox x:Name="TextBox_FindTeamsByCity" Grid.Column="1" Margin="30 0 150 0" TextAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_FindTeamsByCity"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_FindTeamsByCity_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Пошук інформації за назвою команди і міста."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="Назва команди:"
+									               FontSize="12"
+									               Margin="1"
+									               TextAlignment="Center"/>
+
+                                        <TextBox x:Name="TextBox_FindInfoByTeam"
+									             Grid.Row="1"
+									             Margin="50 0 50 0"/>
+
+
+                                        <TextBlock Grid.Column="1" 
+									               Text="Назва міста:"
+									               FontSize="12"
+									               Margin="1" 
+								                   TextAlignment="Center"/>
+
+                                        <TextBox x:Name="TextBox_FindInfoByCity"
+									             Grid.Column="1" 
+									             Grid.Row="1"
+									             Margin="50 0 50 0"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_FindInfoByNameAndCity"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_FindInfoByNameAndCity_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення команди з найбільшою кількістю перемог."/>
+                                    <Button x:Name="Btn_GetTeamWithMostWins"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GetTeamWithMostWins_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення команди з найбільшою кількістю поразок."/>
+                                    <Button x:Name="Btn_GetTeamWithMostLosses"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GetTeamWithMostLosses_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення команди з найбільшою кількістю ігор у нічию."/>
+                                    <Button x:Name="Btn_GetTeamWithMostDraws"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GetTeamWithMostDraws_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення команди з найбільшою кількістю забитих голів."/>
+                                    <Button x:Name="Btn_GetTeamWithMostGoalsScored"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GetTeamWithMostGoalsScored_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення команди з найбільшою кількістю пропущених голів."/>
+                                    <Button x:Name="Btn_GetTeamWithMostMissedGoals"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GetTeamWithMostMissedGoals_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                    </ListView>
+
+                </Grid>
+                
+            </TabItem>
+            
             <TabItem Header="Перегляд" Width="100" Height="25">
 
                 <Grid Background="#FFE5E5E5">
@@ -47,46 +271,111 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="Dgv_RecordsListEditing" IsReadOnly="False"/>
+                    <DataGrid x:Name="Dgv_RecordsListEditing"
+                              IsReadOnly="True"
+                              SelectionUnit="FullRow"
+                              SelectionMode="Single"
+                              SelectionChanged="Dgv_RecordsListEditing_SelectionChanged"/>
 
                     <Grid Grid.Column="1">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.15*"/>
-                            <RowDefinition Height="0.2*"/>
+                            <RowDefinition Height="0.08*"/>
+                            <RowDefinition Height="0.1*"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Виберіть таблицю з якою бажаєте виконати операції:"
                                    TextAlignment="Center"
                                    VerticalAlignment="Center"
-                                   FontSize="22"/>
+                                   FontSize="18"/>
 
                         <ComboBox x:Name="Cmb_TablesList"
                                   Grid.Row="1"
-                                  Margin="25" 
-                                  FontSize="18"
+                                  Margin="8" 
+                                  FontSize="15"
                                   HorizontalContentAlignment="Center" 
                                   VerticalContentAlignment="Center"/>
 
                         <Grid Grid.Row="2">
 
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="0.15*"/>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition Height="0.15*"/>
                             </Grid.RowDefinitions>
 
                             <Button x:Name="Btn_ReadDataByTables"
-                                    Content="Зчитати дані з таблиці"
+                                    Content="Зчитати оновлені дані з таблиці"
                                     Style="{StaticResource btn_Editing}"
                                     Click="Btn_ReadDataByTables_Click"/>
 
-                            <Button x:Name="Btn_SaveChanges"
-                                    Grid.Row="1" 
-                                    Content="Зберегти зміни"
-                                    Style="{StaticResource btn_Editing}"
-                                    Click="Btn_SaveChanges_Click"/>
+                            <Grid Grid.Row="1">
+
+                                <Grid x:Name="Grid_FieldsOfTeam" Visibility="Visible">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Назва команди:" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_TeamName" Style="{StaticResource TextBox_Style}"/>
+
+                                    <TextBlock Text="Назва міста команди:" Grid.Row="1" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_TeamCity" Grid.Row="1" Style="{StaticResource TextBox_Style}"/>
+
+                                    <TextBlock Text="Кількість перемог:" Grid.Row="2" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_NumberOfWins" Grid.Row="2" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                    <TextBlock Text="Кількість поразок:" Grid.Row="3" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_NumberOfDefeats" Grid.Row="3" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                    <TextBlock Text="Кількість ігор унічию:" Grid.Row="4" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_NumberOfDraws" Grid.Row="4" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                    <TextBlock Text="Кількість забитих голів:" Grid.Row="5" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_NumberOfGoalsScored" Grid.Row="5" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                    <TextBlock Text="Кількість пропущених голів:" Grid.Row="6" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_NumberOfMissedGoals" Grid.Row="6" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid Grid.Row="2">
+
+                                <UniformGrid Columns="3">
+
+                                    <Button x:Name="Btn_AddItem"
+                                        Content="Додати"
+                                        Style="{StaticResource btn_Editing}"
+                                        Click="Btn_AddItem_Click"/>
+
+                                    <Button x:Name="Btn_RemoveItem"
+                                        Content="Видалити"
+                                        Style="{StaticResource btn_Editing}"
+                                        Click="Btn_RemoveItem_Click"/>
+
+                                    <Button x:Name="Btn_SaveChanges" 
+                                        Content="Зберегти зміни"
+                                        Style="{StaticResource btn_Editing}"
+                                        Click="Btn_SaveChanges_Click"/>
+
+                                </UniformGrid>
+                                
+                            </Grid>
 
                         </Grid>
 
