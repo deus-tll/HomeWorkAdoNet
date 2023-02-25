@@ -1,0 +1,660 @@
+﻿<Window x:Class="Game_Application.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Game_Application"
+        mc:Ignorable="d"
+        Title="Інформація про ігри" Height="600" MinHeight="600" Width="1250" MinWidth="1250" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="btn_Query" TargetType="Button">
+            <Setter Property="Content" Value="Виконати і показати"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Margin" Value="100 0 100 2"/>
+            <Setter Property="Grid.Row" Value="1"/>
+        </Style>
+
+        <Style x:Key="txtBlock_Query" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="txtBlock_Fields" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="border_Style">
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="BlueViolet"/>
+        </Style>
+
+        <Style x:Key="btn_Editing" TargetType="Button">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style x:Key="TextBox_Style" TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style x:Key="ComboBox_Style" TargetType="ComboBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+
+        <TabControl x:Name="TabControl_Main" SelectionChanged="TabControl_Main_SelectionChanged">
+
+            <TabItem Header="Редагування" Tag="Editing" Width="100" Height="25">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="0.15*"/>
+                    </Grid.RowDefinitions>
+
+                    <TabControl x:Name="TabControl_Editing" SelectionChanged="TabControl_Editing_SelectionChanged">
+
+                        <TabItem x:Name="TabItem_Games" Header="Games" Width="100" Height="25" HorizontalAlignment="Right">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid x:Name="Dgv_EditingGames"
+                                          Grid.RowSpan="2"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          AutoGenerateColumns="False"
+                                          SelectionChanged="Dgv_EditingGames_SelectionChanged">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                                        <DataGridTextColumn Header="Release Date" Binding="{Binding Path=ReleaseDate}"/>
+                                        <DataGridTextColumn Header="Mode" Binding="{Binding Path=Mode}"/>
+                                        <DataGridTextColumn Header="Sold Copies" Binding="{Binding Path=SoldCopies}"/>
+                                        <DataGridTextColumn Header="Style" Binding="{Binding Path=Style.Name}"/>
+                                        <DataGridTextColumn Header="Company" Binding="{Binding Path=Company.Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Grid Grid.Column="1" Grid.RowSpan="2">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Назва гри:" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_GameName" Style="{StaticResource TextBox_Style}"/>
+
+                                    <TextBlock Text="Дата релізу:" Grid.Row="1" Style="{StaticResource txtBlock_Fields}"/>
+                                    <DatePicker x:Name="DatePicker_GameRelease" Grid.Row="1" Grid.Column="1" FontSize="15" Margin="10" VerticalContentAlignment="Center"/>
+
+                                    <TextBlock Text="Стиль:" Grid.Row="2" Style="{StaticResource txtBlock_Fields}"/>
+                                    <ComboBox x:Name="ComboBox_GameStyle" Grid.Row="2" Style="{StaticResource ComboBox_Style}"/>
+
+                                    <TextBlock Text="Студія\Компанія:" Grid.Row="3" Style="{StaticResource txtBlock_Fields}"/>
+                                    <ComboBox x:Name="ComboBox_GameCompany" Grid.Row="3" Style="{StaticResource ComboBox_Style}"/>
+
+                                    <TextBlock Text="Режим:" Grid.Row="4" Style="{StaticResource txtBlock_Fields}"/>
+                                    <ComboBox x:Name="ComboBox_GameMode" Grid.Row="4" Style="{StaticResource ComboBox_Style}"/>
+
+                                    <TextBlock Text="Проданих копій:" Grid.Row="5" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_SoldCopies" Grid.Row="5" Style="{StaticResource TextBox_Style}" PreviewTextInput="TextBox_PreviewTextInput"/>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem x:Name="TabItem_Styles" Header="Styles" Width="100" Height="25" HorizontalAlignment="Right">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid x:Name="Dgv_EditingStyle"
+                                          Grid.RowSpan="2"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          SelectionChanged="Dgv_EditingStyle_SelectionChanged"
+                                          AutoGenerateColumns="False">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Grid Grid.Column="1" Grid.RowSpan="2">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Назва стилю:" Grid.Row="3" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_StyleName" Grid.Row="3" Style="{StaticResource TextBox_Style}"/>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem x:Name="TabItem_Countries" Header="Countries" Width="100" Height="25" HorizontalAlignment="Right">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid x:Name="Dgv_EditingCountry"
+                                          Grid.RowSpan="2"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          SelectionChanged="Dgv_EditingCountry_SelectionChanged"
+                                          AutoGenerateColumns="False">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Grid Grid.Column="1" Grid.RowSpan="2">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Назва країни:" Grid.Row="3" Style="{StaticResource txtBlock_Fields}"/>
+                                    <TextBox x:Name="TextBox_CountryName" Grid.Row="3" Style="{StaticResource TextBox_Style}"/>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem x:Name="TabItem_Cities" Header="Cities" Width="100" Height="25" HorizontalAlignment="Right">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.8*"/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid x:Name="Dgv_EditingCities"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          AutoGenerateColumns="False"
+                                          SelectionChanged="Dgv_EditingCities_SelectionChanged">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                                        <DataGridTextColumn Header="Country" Binding="{Binding Path=Country.Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <DataGrid x:Name="Dgv_EditingCityCompanies"
+                                          Grid.Row="1"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          AutoGenerateColumns="False">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Company Name" Binding="{Binding Path=Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Grid Grid.Column="1" Grid.RowSpan="2">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.5*"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <TextBlock Text="Назва міста:" Grid.Row="0" Style="{StaticResource txtBlock_Fields}"/>
+                                        <TextBox x:Name="TextBox_CityName" Grid.Row="0" Margin="15" Style="{StaticResource TextBox_Style}"/>
+
+                                        <TextBlock Text="Країна:" Grid.Row="1" Style="{StaticResource txtBlock_Fields}"/>
+                                        <ComboBox x:Name="ComboBox_CityCountry" Grid.Row="1" Margin="15" Style="{StaticResource ComboBox_Style}"/>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Margin="10" x:Name="Grid_AddCompaniesToCity">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Додати компанію для цього міста" Style="{StaticResource txtBlock_Fields}"/>
+                                            <ComboBox x:Name="ComboBox_AllCompanies" Grid.Row="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+                                            <Button x:Name="Btn_AddCompanyToCity" Content="Додати" Grid.Row="2" Margin="100 5 100 5" FontSize="15" Click="Btn_AddCompanyToCity_Click"/>
+
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Margin="10" x:Name="Grid_DeleteCompaniesToCity">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Видалити компанію з цього міста" Style="{StaticResource txtBlock_Fields}"/>
+                                            <ComboBox x:Name="ComboBox_CompaniesInThisCity" Grid.Row="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+                                            <Button x:Name="Btn_DeleteCompanyFromThisCity" Content="Видалити" Grid.Row="2" Margin="100 5 100 5" FontSize="15" Click="Btn_DeleteCompanyFromThisCity_Click"/>
+
+                                        </Grid>
+                                        
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem x:Name="TabItem_Companies" Header="Companies" Width="100" Height="25" HorizontalAlignment="Right">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.8*"/>
+                                </Grid.RowDefinitions>
+
+                                <DataGrid x:Name="Dgv_EditingCompanies"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          AutoGenerateColumns="False"
+                                          SelectionChanged="Dgv_EditingCompanies_SelectionChanged">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Company Name" Binding="{Binding Path=Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <DataGrid x:Name="Dgv_EditingCompanyCities"
+                                          Grid.Row="1"
+                                          IsReadOnly="True"
+                                          SelectionUnit="FullRow"
+                                          SelectionMode="Single"
+                                          AutoGenerateColumns="False">
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="City Name" Binding="{Binding Path=Name}"/>
+                                        <DataGridTextColumn Header="Country" Binding="{Binding Path=Country.Name}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <Grid Grid.Column="1" Grid.RowSpan="2">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.2*"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <TextBlock Text="Назва компанії:" Grid.Row="1" Style="{StaticResource txtBlock_Fields}"/>
+                                        <TextBox x:Name="TextBox_CompanyName" Grid.Row="1" Style="{StaticResource TextBox_Style}"/>
+
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Margin="10" x:Name="Grid_AddCityToCompanies">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Додати місто де є філія компанії" Style="{StaticResource txtBlock_Fields}"/>
+                                            <ComboBox x:Name="ComboBox_AllCities" Grid.Row="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+                                            <Button x:Name="Btn_AddCityToCompany" Content="Додати" Grid.Row="2" Margin="100 5 100 5" FontSize="15" Click="Btn_AddCityToCompany_Click"/>
+
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Margin="10" x:Name="Grid_DeleteCityToCompanies">
+
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Видалити компанію з цього міста" Style="{StaticResource txtBlock_Fields}"/>
+                                            <ComboBox x:Name="ComboBox_CitiesInThisCompany" Grid.Row="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+                                            <Button x:Name="Btn_DeleteCityFromThisCompany" Content="Видалити" Grid.Row="2" Margin="100 5 100 5" FontSize="15" Click="Btn_DeleteCityFromThisCompany_Click"/>
+
+                                        </Grid>
+
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </TabItem>
+
+                    </TabControl>
+
+                    <UniformGrid Columns="3" Grid.Row="2">
+
+                        <Button x:Name="Btn_AddItem"
+                                  Content="Додати"
+                                  Style="{StaticResource btn_Editing}"
+                                  Click="Btn_AddItem_Click"/>
+
+                        <Button x:Name="Btn_RemoveItem"
+                                Content="Видалити"
+                                Style="{StaticResource btn_Editing}"
+                                Click="Btn_RemoveItem_Click"/>
+
+                        <Button x:Name="Btn_SaveChanges" 
+                                Content="Зберегти зміни"
+                                Style="{StaticResource btn_Editing}"
+                                Click="Btn_SaveChanges_Click"/>
+
+                    </UniformGrid>
+
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Запити" Tag="Queries" Width="100" Height="25">
+
+                <Grid Background="#FFE5E5E5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="Dgv_Queries"
+				              IsReadOnly="True"
+				              Margin="15"/>
+
+                    <ListView x:Name="ListView_Queries"
+				              Grid.Column="1"
+				              Margin="15">
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення кількості однокористувацьких ігор."/>
+                                    <Button x:Name="Btn_CountOfSingleplayerGames"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_CountOfSingleplayerGames_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відображення кількості багатокористувацьких ігор."/>
+                                    <Button x:Name="Btn_CountOfMultiplayerGames"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_CountOfMultiplayerGames_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Показати гру з максимальною кількістю проданих ігор певного стилю."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.4*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Назва стилю:" FontSize="15" Margin="4" TextAlignment="Center"/>
+
+                                        <ComboBox x:Name="ComboBox_GameWithMostSoldCopies" Grid.Column="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_GameWithMostSoldCopies"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_GameWithMostSoldCopies_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Топ-5 ігор за найбільшою кількістю продажів певного стилю."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.4*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Назва стилю:" FontSize="15" Margin="4" TextAlignment="Center"/>
+
+                                        <ComboBox x:Name="ComboBox_Top5GamesWithMostSoldCopies" Grid.Column="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_Top5GamesWithMostSoldCopies"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_Top5GamesWithMostSoldCopies_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Топ-5 ігор за найменшою кількістю продажів конкретного стилю."/>
+
+                                    <Grid Grid.Row="1" Margin="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.4*"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Назва стилю:" FontSize="15" Margin="4" TextAlignment="Center"/>
+
+                                        <ComboBox x:Name="ComboBox_Top5GamesWithLowestSoldCopies" Grid.Column="1" Margin="5" Style="{StaticResource ComboBox_Style}"/>
+
+                                    </Grid>
+
+                                    <Button x:Name="Btn_Top5GamesWithLowestSoldCopies"
+								            Grid.Row="2"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_Top5GamesWithLowestSoldCopies_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Відобразити повну інформацію про кожну гру."/>
+                                    <Button x:Name="Btn_AllInfoAboutGames"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_AllInfoAboutGames_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                        <ListViewItem HorizontalContentAlignment="Stretch">
+                            <Border Style="{StaticResource border_Style}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Style="{StaticResource txtBlock_Query}" Text="Назва кожної студії та стиль ігор, кількість яких переважає по створенню у цьому стилі."/>
+                                    <Button x:Name="Btn_CompaniesAndStylesWithMostCount"
+								            Style="{StaticResource btn_Query}"
+								            Click="Btn_CompaniesAndStylesWithMostCount_Click"/>
+                                </Grid>
+                            </Border>
+                        </ListViewItem>
+
+                    </ListView>
+
+                </Grid>
+
+            </TabItem>
+
+        </TabControl>
+        
+    </Grid>
+</Window>
