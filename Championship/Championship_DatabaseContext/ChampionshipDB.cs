@@ -16,9 +16,12 @@ namespace Championship_DatabaseContext
 		public ChampionshipDB(string connectionString) : base() { CONNECTION_STRING = connectionString; }
 
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer(CONNECTION_STRING);
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer(CONNECTION_STRING).UseLazyLoadingProxies();
 
 
 		public DbSet<Team> Teams { get; set; }
+		public DbSet<Player> Players { get; set; }
+		public DbSet<Match> Matches { get; set; }
+		public DbSet<Goal> Goals { get; set; }
 	}
 }

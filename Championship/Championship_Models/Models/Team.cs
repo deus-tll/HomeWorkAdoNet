@@ -22,5 +22,7 @@ namespace Championship_Models.Models
 		public int NumberOfGoalsScored { get; set; }
 
 		public int NumberOfMissedGoals { get; set; }
+
+		public virtual ICollection<Player> Players { get; set; } = new HashSet<Player>();
 	}
 }

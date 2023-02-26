@@ -14,7 +14,10 @@ namespace Championship_Application.Сlasses
 {
 	public enum Table
 	{
-		Teams
+		Teams,
+		Matches,
+		Players,
+		Goals
 	}
 
 	public class Championship
@@ -30,6 +33,26 @@ namespace Championship_Application.Сlasses
 		{
 			DB.Teams.Load();
 			return DB.Teams.Local.ToObservableCollection();
+		}
+
+
+		public ObservableCollection<Match> GetMatches()
+		{
+			DB.Matches.Load();
+			return DB.Matches.Local.ToObservableCollection();
+		}
+
+
+		public ObservableCollection<Player> GetPlayers()
+		{
+			DB.Players.Load();
+			return DB.Players.Local.ToObservableCollection();
+		}
+
+		public ObservableCollection<Goal> GetGoals()
+		{
+			DB.Goals.Load();
+			return DB.Goals.Local.ToObservableCollection();
 		}
 
 
@@ -57,6 +80,85 @@ namespace Championship_Application.Сlasses
 		}
 
 
+		public void AddPlayer(string pib, string country, short number, string position)
+		{
+			Player player = new()
+			{
+				PIB = pib,
+				Country = country,
+				Number = number,
+				Position = position
+			};
+
+			DB.Players.Add(player);
+			DB.SaveChanges();
+		}
+
+
+		public void RemovePlayer(Player player)
+		{
+			DB.Players.Remove(player);
+		}
+
+
+		public void AddMatch(Team team1, Team team2, DateTime date)
+		{
+			Match match = new()
+			{
+				Team1 = team1,
+				Team2 = team2,
+				DateOfTheMatch = date
+			};
+
+			DB.Matches.Add(match);
+			DB.SaveChanges();
+		}
+
+
+		public void RemoveMatch(Match match)
+		{
+			DB.Matches.Remove(match);
+		}
+
+
+		public void AddGoal(Match match, Player player, short time, short minute)
+		{
+			Goal goal = new()
+			{
+				Match = match,
+				MatchId = match.Id,
+				Player = player,
+				Time = time,
+				Minute = minute
+			};
+
+			DB.Matches.Load();
+			Match? resMatch = DB.Matches.FirstOrDefault(m => m.Id == match.Id);
+			if (resMatch != null)
+			{
+				resMatch.Goals.Add(goal);
+			}
+
+			DB.Goals.Add(goal);
+			DB.SaveChanges();
+		}
+
+		public bool IsTherePlayerAlreadyInTeam(int teamId, int playerId)
+		{
+			DB.Teams.Load();
+			Team? team = DB.Teams.FirstOrDefault(t => t.ID == teamId);
+			if(team is null) return false;
+
+			return team.Players.Any(p => p.ID == playerId);
+		}
+
+
+		public void RemoveGoal(Goal goal)
+		{
+			DB.Goals.Remove(goal);
+		}
+
+
 		public async Task<int> SaveAllChanges(Button sender)
 		{
 			sender.IsEnabled = false;
@@ -71,17 +173,31 @@ namespace Championship_Application.Сlasses
 		}
 
 
-		public bool IsTeamAlreadyInBase(string name, string city)
-		{
-			DB.Teams.Load();
-			return DB.Teams.Any(t => t.Name == name && t.City == city);
-		}
-
-
 		public Team? GetTeamByNameAndCity(string name, string city)
 		{
 			DB.Teams.Load();
 			return DB.Teams.FirstOrDefault(t => t.Name == name && t.City == city);
+		}
+
+
+		public Match? GetMatchById(int id)
+		{
+			DB.Matches.Load();
+			return DB.Matches.FirstOrDefault(m => m.Id == id);
+		}
+
+
+		public Player? GetPlayer(string pib, string country, short number)
+		{
+			DB.Players.Load();
+			return DB.Players.FirstOrDefault(p => p.PIB == pib && p.Country == country && p.Number == number);
+		}
+
+
+		public Match? GetMatch(Team team1, Team team2, DateTime dateOfTheMatch)
+		{
+			DB.Matches.Load();
+			return DB.Matches.FirstOrDefault(m => m.Team1.Name == team1.Name && m.Team2.Name == team2.Name && m.DateOfTheMatch == dateOfTheMatch);
 		}
 
 
@@ -138,6 +254,39 @@ namespace Championship_Application.Сlasses
 		{
 			DB.Teams.Load();
 			return DB.Teams.ToList().OrderByDescending(t => t.NumberOfMissedGoals).Take(1);
+		}
+
+
+		public bool IsThereTeamAlready(string name, string city)
+		{
+			DB.Teams.Load();
+			return DB.Teams.Any(t => t.Name == name && t.City == city);
+		}
+
+
+		public bool IsThereMatchAlready(int teamId1, int teamId2, DateTime dateOfTheMatch)
+		{
+			DB.Matches.Load();
+			return DB.Matches.Any(v => (v.Team1Id == teamId1 && v.Team2Id == teamId2) ||
+									   (v.Team2Id == teamId1 && v.Team1Id == teamId2) && 
+									    v.DateOfTheMatch == dateOfTheMatch);
+		}
+
+
+		public IEnumerable GetDifferenceInGoalsForEachTeam()
+		{
+			DB.Teams.Load();
+			DB.Matches.Load();
+
+			var TeamStats = from t in DB.Teams
+							from m in DB.Matches
+							where t.ID == m.Team1Id || t.ID == m.Team2Id
+							group new { m, t } by t into g
+							select new
+							{
+								Team = g.Key,
+								GoalsScored = g.
+							}
 		}
 	}
 }

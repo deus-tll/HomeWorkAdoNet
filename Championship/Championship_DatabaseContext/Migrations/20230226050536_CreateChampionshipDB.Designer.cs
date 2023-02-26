@@ -4,6 +4,7 @@ using Championship_DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Championship_DatabaseContext.Migrations
 {
     [DbContext(typeof(ChampionshipDB))]
-    partial class ChampionshipDBModelSnapshot : ModelSnapshot
+    [Migration("20230226050536_CreateChampionshipDB")]
+    partial class CreateChampionshipDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
