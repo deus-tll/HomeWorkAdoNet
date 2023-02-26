@@ -106,12 +106,12 @@ namespace Championship_DatabaseContext.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("TeamID")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TeamID");
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Players");
                 });
@@ -191,19 +191,18 @@ namespace Championship_DatabaseContext.Migrations
 
             modelBuilder.Entity("Championship_Models.Models.Player", b =>
                 {
-                    b.HasOne("Championship_Models.Models.Team", null)
-                        .WithMany("Players")
-                        .HasForeignKey("TeamID");
+                    b.HasOne("Championship_Models.Models.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Championship_Models.Models.Match", b =>
                 {
                     b.Navigation("Goals");
-                });
-
-            modelBuilder.Entity("Championship_Models.Models.Team", b =>
-                {
-                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

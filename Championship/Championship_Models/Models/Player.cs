@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Championship_Models.Models
 {
@@ -23,5 +24,9 @@ namespace Championship_Models.Models
 		[Required]
 		[StringLength(100)]
 		public string? Position { get; set; }
+
+		[AllowNull]
+		public int TeamId { get; set; }
+		public virtual Team? Team { get; set; }
 	}
 }

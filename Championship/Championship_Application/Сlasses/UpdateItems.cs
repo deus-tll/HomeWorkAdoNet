@@ -61,6 +61,7 @@ namespace Championship_Application
 			player.Country = TextBox_PlayerCountry.Text;
 			player.Number = Convert.ToInt16(TextBox_PlayerNumber.Text);
 			player.Position = TextBox_PlayerPosition.Text;
+			player.Team = ComboBox_PlayerTeam.SelectedItem as Team;
 
 			await _app.SaveAllChanges(Btn_SaveChanges);
 			Switches();

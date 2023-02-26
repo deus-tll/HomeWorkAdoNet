@@ -80,14 +80,15 @@ namespace Championship_Application.Сlasses
 		}
 
 
-		public void AddPlayer(string pib, string country, short number, string position)
+		public void AddPlayer(string pib, string country, short number, string position, Team team)
 		{
 			Player player = new()
 			{
 				PIB = pib,
 				Country = country,
 				Number = number,
-				Position = position
+				Position = position,
+				Team = team
 			};
 
 			DB.Players.Add(player);
@@ -141,15 +142,6 @@ namespace Championship_Application.Сlasses
 
 			DB.Goals.Add(goal);
 			DB.SaveChanges();
-		}
-
-		public bool IsTherePlayerAlreadyInTeam(int teamId, int playerId)
-		{
-			DB.Teams.Load();
-			Team? team = DB.Teams.FirstOrDefault(t => t.ID == teamId);
-			if(team is null) return false;
-
-			return team.Players.Any(p => p.ID == playerId);
 		}
 
 
@@ -277,16 +269,55 @@ namespace Championship_Application.Сlasses
 		{
 			DB.Teams.Load();
 			DB.Matches.Load();
+			DB.Goals.Load();
 
-			var TeamStats = from t in DB.Teams
-							from m in DB.Matches
-							where t.ID == m.Team1Id || t.ID == m.Team2Id
-							group new { m, t } by t into g
-							select new
-							{
-								Team = g.Key,
-								GoalsScored = g.
-							}
+			return from match in DB.Matches.Local.ToObservableCollection()
+				   group match by match.Team1 into teamMatches
+				   select new
+				   {
+					   Team = teamMatches.Key,
+					   GoalsScored = teamMatches.Sum(m => m.Goals.Count(g => g.Player.Team == teamMatches.Key)),
+					   GoalsConceded = teamMatches.Sum(m => m.Team2 == teamMatches.Key ? m.Goals.Count : 0)
+									   + teamMatches.Sum(m => m.Team1 == teamMatches.Key ? m.Goals.Count(g => g.Player.Team != teamMatches.Key) : 0)
+				   };
+		}
+
+
+		public IEnumerable GetAllInfoAboutMatch()
+		{
+			DB.Matches.Load();
+
+			return from m in DB.Matches.Local.ToObservableCollection()
+				   select new {TeamID = m.Id , Team1 = m.Team1.Name, Team2 = m.Team2.Name, m.DateOfTheMatch };
+		}
+
+		public IEnumerable GetMatchesBySpecDate(DateTime date)
+		{
+			DB.Matches.Load();
+
+			return from m in DB.Matches.Local.ToObservableCollection()
+				   where m.DateOfTheMatch == date
+				   select new { TeamID = m.Id, Team1 = m.Team1.Name, Team2 = m.Team2.Name, m.DateOfTheMatch };
+		}
+
+		public IEnumerable GetMatchesBySpecTeam(string teamName)
+		{
+			DB.Matches.Load();
+
+			return from m in DB.Matches.Local.ToObservableCollection()
+				   where m.Team1.Name == teamName || m.Team2.Name == teamName
+				   select new { TeamID = m.Id, Team1 = m.Team1.Name, Team2 = m.Team2.Name, m.DateOfTheMatch };
+		}
+
+		public IEnumerable GetPlayersWhoScoredGoalsInSpecDate(DateTime date)
+		{
+			DB.Matches.Load();
+			DB.Goals.Load();
+
+			return from g in DB.Goals.Local.ToObservableCollection()
+				   join m in DB.Matches.Local.ToObservableCollection() on g.MatchId equals m.Id
+				   where m.DateOfTheMatch == date
+				   select new { PlayerPIB = g.Player.PIB };
 		}
 	}
 }

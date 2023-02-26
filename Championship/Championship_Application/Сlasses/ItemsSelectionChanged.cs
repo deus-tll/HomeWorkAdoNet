@@ -21,6 +21,7 @@ namespace Championship_Application
 			TextBox_PlayerCountry.Text = player.Country;
 			TextBox_PlayerNumber.Text = player.Number.ToString();
 			TextBox_PlayerPosition.Text = player.Position;
+			ComboBox_PlayerTeam.SelectedItem = player.Team;
 		}
 
 		private void DataGrid_EditingMatches_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -61,8 +62,6 @@ namespace Championship_Application
 			TextBox_NumberOfDraws.Text = team.NumberOfDraws.ToString();
 			TextBox_NumberOfGoalsScored.Text = team.NumberOfGoalsScored.ToString();
 			TextBox_NumberOfMissedGoals.Text = team.NumberOfMissedGoals.ToString();
-
-			DataGrid_EditingTeamsPlayers.ItemsSource = team.Players;
 		}
 	}
 }

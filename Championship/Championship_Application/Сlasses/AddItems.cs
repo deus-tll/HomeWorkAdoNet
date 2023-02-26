@@ -49,10 +49,13 @@ namespace Championship_Application
 				TextBox_PlayerPosition.Text
 			};
 
+			Team? team = ComboBox_PlayerTeam.SelectedItem as Team;
+			if (team is null) return;
+
 			if (!CheckFields(fields))
 				return;
 
-			_app.AddPlayer(TextBox_PlayerPIB.Text, TextBox_PlayerCountry.Text, Convert.ToInt16(TextBox_PlayerNumber.Text), TextBox_PlayerPosition.Text);
+			_app.AddPlayer(TextBox_PlayerPIB.Text, TextBox_PlayerCountry.Text, Convert.ToInt16(TextBox_PlayerNumber.Text), TextBox_PlayerPosition.Text, team);
 
 			await _app.SaveAllChanges(Btn_AddItem);
 			Switches();

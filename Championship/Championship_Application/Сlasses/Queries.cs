@@ -64,5 +64,39 @@ namespace Championship_Application
 		{
 			Dgv_RecordsListQueries.ItemsSource = _app.GetTeamWithMostMissedGoals();
 		}
+
+		private void Btn_GetDifferenceInGoalsForEachTeam_Click(object sender, RoutedEventArgs e)
+		{
+			Dgv_RecordsListQueries.ItemsSource = _app.GetDifferenceInGoalsForEachTeam();
+		}
+
+		private void Btn_GetAllInfoAboutMatch_Click(object sender, RoutedEventArgs e)
+		{
+			Dgv_RecordsListQueries.ItemsSource = _app.GetAllInfoAboutMatch();
+		}
+
+		private void Btn_GetMatchesBySpecDate_Click(object sender, RoutedEventArgs e)
+		{
+			DateTime? date = DatePicker_GetMatchesBySpecDate.SelectedDate;
+			if (date is null) return;
+
+			Dgv_RecordsListQueries.ItemsSource = _app.GetMatchesBySpecDate((DateTime)date);
+		}
+
+		private void Btn_GetMatchesBySpecTeam_Click(object sender, RoutedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(TextBox_GetMatchesBySpecTeam.Text))
+				return;
+
+			Dgv_RecordsListQueries.ItemsSource = _app.GetMatchesBySpecTeam(TextBox_GetMatchesBySpecTeam.Text);
+		}
+
+		private void Btn_GetPlayersWhoScoredGoalsInSpecDate_Click(object sender, RoutedEventArgs e)
+		{
+			DateTime? date = DatePicker_GetPlayersWhoScoredGoalsInSpecDate.SelectedDate;
+			if (date is null) return;
+
+			Dgv_RecordsListQueries.ItemsSource = _app.GetPlayersWhoScoredGoalsInSpecDate((DateTime)date);
+		}
 	}
 }

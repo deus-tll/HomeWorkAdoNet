@@ -25,8 +25,6 @@ namespace Championship_Application
 			FillTabItemHeaders();
 		}
 
-		
-
 
 		private static bool CheckFields(List<string> fields)
 		{
@@ -47,47 +45,5 @@ namespace Championship_Application
 		{
 			e.Handled = !int.TryParse(e.Text, out _);
 		}
-		
-
-		private async void Btn_AddPlayerToTheTeam_Click(object sender, RoutedEventArgs e)
-		{
-			Team? team = DataGrid_EditingTeams.SelectedItem as Team;
-			if (team is null) return;
-
-			Player? player = ComboBox_AllPlayers.SelectedItem as Player;
-			if (player is null) return;
-
-			if (team is not null && player is not null)
-			{
-				if (_app.IsTherePlayerAlreadyInTeam(team.ID, player.ID))
-				{
-					MessageBox.Show("В данній команді вже є такий гравець!");
-					return;
-				}
-
-				team.Players.Add(player);
-				await _app.SaveAllChanges(Btn_AddPlayerToTheTeam);
-				Switches();
-			}
-			else
-			{
-				MessageBox.Show("Оберіть команду з таблиці!");
-			}
-		}
-
-		private void Btn_RemovePlayerFromTheTeam_Click(object sender, RoutedEventArgs e)
-		{
-			Team? team = DataGrid_EditingTeams.SelectedItem as Team;
-			if (team is null) return;
-
-			if (team.Players.Count == 0) return;
-
-			Player? player = DataGrid_EditingTeamsPlayers.SelectedItem as Player;
-			if (player is null) return;
-
-			team.Players.Remove(player);
-		}
-
-		
 	}
 }

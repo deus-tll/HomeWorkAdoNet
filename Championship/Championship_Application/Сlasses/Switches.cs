@@ -60,6 +60,11 @@ namespace Championship_Application
 		private void SwitchToPlayersPage()
 		{
 			DataGrid_EditingPlayers.ItemsSource = _app.GetPlayers();
+
+			ComboBox_PlayerTeam.ItemsSource = _app.GetTeams();
+			ComboBox_PlayerTeam.DisplayMemberPath = "Name";
+			if (ComboBox_PlayerTeam.Items.Count > 0)
+				ComboBox_PlayerTeam.SelectedItem = ComboBox_PlayerTeam.Items[0];
 		}
 
 		private void SwitchToMatchesPage()
@@ -68,10 +73,12 @@ namespace Championship_Application
 
 			var collection = _app.GetTeams();
 			ComboBox_MatchTeam1.ItemsSource = collection;
+			ComboBox_MatchTeam1.DisplayMemberPath = "Name";
 			if (ComboBox_MatchTeam1.Items.Count > 0)
 				ComboBox_MatchTeam1.SelectedItem = ComboBox_MatchTeam1.Items[0];
 
 			ComboBox_MatchTeam2.ItemsSource = collection;
+			ComboBox_MatchTeam2.DisplayMemberPath = "Name";
 			if (ComboBox_MatchTeam2.Items.Count > 0)
 				ComboBox_MatchTeam2.SelectedItem = ComboBox_MatchTeam2.Items[0];
 		}
@@ -79,10 +86,6 @@ namespace Championship_Application
 		private void SwitchToTeamsPage()
 		{
 			DataGrid_EditingTeams.ItemsSource = _app.GetTeams();
-
-			ComboBox_AllPlayers.ItemsSource = _app.GetPlayers();
-			if (ComboBox_AllPlayers.Items.Count > 0)
-				ComboBox_AllPlayers.SelectedItem = ComboBox_AllPlayers.Items[0];
 		}
 
 		private void SwitchToGoalsPage()
@@ -90,6 +93,7 @@ namespace Championship_Application
 			DataGrid_EditingGoals.ItemsSource = _app.GetGoals();
 
 			ComboBox_GoalPlayer.ItemsSource = _app.GetPlayers();
+			ComboBox_GoalPlayer.DisplayMemberPath = "PIB";
 			if (ComboBox_GoalPlayer.Items.Count > 0)
 				ComboBox_GoalPlayer.SelectedItem = ComboBox_GoalPlayer.Items[0];
 		}

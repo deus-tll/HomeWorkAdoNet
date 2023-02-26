@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Championship_DatabaseContext.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateChampionshipDB : Migration
+    public partial class CreateDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,16 +67,17 @@ namespace Championship_DatabaseContext.Migrations
                     Country = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Number = table.Column<short>(type: "smallint", nullable: false),
                     Position = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TeamID = table.Column<int>(type: "int", nullable: true)
+                    TeamId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Players", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Players_Teams_TeamID",
-                        column: x => x.TeamID,
+                        name: "FK_Players_Teams_TeamId",
+                        column: x => x.TeamId,
                         principalTable: "Teams",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,9 +129,9 @@ namespace Championship_DatabaseContext.Migrations
                 column: "Team2Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Players_TeamID",
+                name: "IX_Players_TeamId",
                 table: "Players",
-                column: "TeamID");
+                column: "TeamId");
         }
 
         /// <inheritdoc />
