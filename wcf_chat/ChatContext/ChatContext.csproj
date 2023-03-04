@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChatContext</RootNamespace>
     <AssemblyName>ChatContext</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,11 +54,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ChatDB_Context.cs" />
+    <Compile Include="Migrations\202303032221379_Initial.cs" />
+    <Compile Include="Migrations\202303032221379_Initial.designer.cs">
+      <DependentUpon>202303032221379_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303040005169_Fix2.cs" />
+    <Compile Include="Migrations\202303040005169_Fix2.designer.cs">
+      <DependentUpon>202303040005169_Fix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202303032221379_Initial.resx">
+      <DependentUpon>202303032221379_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303040005169_Fix2.resx">
+      <DependentUpon>202303040005169_Fix2.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

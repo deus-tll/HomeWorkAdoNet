@@ -49,7 +49,7 @@ namespace wcf_chat
 				var _user = users.FirstOrDefault(i => i.ID == id);
 				if (_user != null)
 				{
-					answer += ": " + _user.Name + " ";
+					answer += ": " + "[" + _user.Name + "] ";
 				}
 
 				answer += msg;

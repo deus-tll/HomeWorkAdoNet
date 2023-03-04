@@ -12,15 +12,14 @@ namespace ChatContext.Context
 {
 	public class ChatDB_Context : DbContext
 	{
-		private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["ChatDB_ConnectionString"].ConnectionString;
+		public ChatDB_Context() : base("ChatDB_ConnectionString") { }
 
-		public ChatDB_Context() : base() { }
-
-		public ChatDB_Context(string connectionString) : base() { CONNECTION_STRING = connectionString; }
+		public ChatDB_Context(string connectionString) : base(connectionString) {  }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			
+			modelBuilder.Configurations.Add(new MessageConfiguration());
+			modelBuilder.Configurations.Add(new ContactConfiguration());
 		}
 
 		public DbSet<Contact> Contacts { get; set; }

@@ -5,21 +5,68 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:ChatClient"
 		mc:Ignorable="d"
-		Title="Chat" Height="350" Width="525" MinHeight="350" MinWidth="525" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+		Title="Chat" Height="500" Width="700" MinHeight="350" MinWidth="525" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+
+    <Window.Resources>
+        <Style x:Key="txtBlock_Fields" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TextBox_Style" TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
 
         <TabControl>
 
             <TabItem Header="Registration" Width="80">
 
-                <Grid>
+                <Grid Margin="30">
 
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
+                    <TextBlock Text="Ім'я:" Style="{StaticResource txtBlock_Fields}"/>
+                    <TextBox x:Name="TextBox_ContactName" Style="{StaticResource TextBox_Style}"/>
+
+                    <TextBlock Text="Прізвище:" Grid.Row="1" Style="{StaticResource txtBlock_Fields}"/>
+                    <TextBox x:Name="TextBox_ContactSurname" Grid.Row="1" Style="{StaticResource TextBox_Style}"/>
+
+                    <TextBlock Text="Номер телефону:" Grid.Row="2" Style="{StaticResource txtBlock_Fields}"/>
+                    <TextBox x:Name="TextBox_ContactPhone" Grid.Row="2" Style="{StaticResource TextBox_Style}"/>
+
+                    <TextBlock Text="Логін:" Grid.Row="3" Style="{StaticResource txtBlock_Fields}"/>
+                    <TextBox x:Name="TextBox_ContactLogin" Grid.Row="3" Style="{StaticResource TextBox_Style}"/>
+
+                    <TextBlock Text="Пароль:" Grid.Row="4" Style="{StaticResource txtBlock_Fields}"/>
+                    <PasswordBox x:Name="TextBox_ContactPassword" Grid.Row="4" Grid.Column="1" Margin="10"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
+
+                    <UniformGrid Columns="2" Grid.ColumnSpan="2" Grid.Row="5">
+                        <Button x:Name="Btn_AddContact" Content="Зареєструватися" Margin="50 10 50 10" Click="Btn_AddContact_Click"/>
+
+                        <Button x:Name="Btn_RemoveContact" Content="Видалити такий контакт" Margin="50 10 50 10" Click="Btn_RemoveContact_Click"/>
+                    </UniformGrid>
+                    
                 </Grid>
                 
             </TabItem>
@@ -29,28 +76,59 @@
                 <Grid>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="5*"/>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Button x:Name="btnConDiscon"
                                 Grid.Column="0"
                                 Content="Connect" 
-                                Margin="10,10,5,5" MinWidth="147" MinHeight="29"
+                                Margin="10" MinWidth="80" MinHeight="29"
                                 Click="btnConDiscon_Click"/>
 
-                        <TextBox x:Name="tbUserName"
-                                 Grid.Column="1" 
-                                 Text="Ім'я користувача"
-                                 Margin="10,10,10,5" MinHeight="29"
-                                 TextWrapping="Wrap"/>
+                        <Grid Grid.Column="1">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Логін користувача" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                            <TextBox x:Name="tbUserName"
+                                     Grid.Row="1"
+                                     Grid.Column="1" 
+                                     Margin="2"
+                                     TextWrapping="Wrap"/>
+
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Пароль" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            
+                            <PasswordBox x:Name="tbPassword"
+                                         Grid.Row="1"
+                                         Grid.Column="1"
+                                         Margin="2"/>
+
+                        </Grid>
+
+                        
                     </Grid>
 
                     <ListBox x:Name="lbChat"
