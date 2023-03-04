@@ -55,9 +55,9 @@
 			Btn_GetAllCustomers = new Button();
 			Dgv_QueriesPart1 = new DataGridView();
 			TabPage_Editing = new TabPage();
-			tabControl3 = new TabControl();
-			tabPage5 = new TabPage();
-			tabPage6 = new TabPage();
+			TabControl_Editing = new TabControl();
+			TabPage_CountriesEditing = new TabPage();
+			TabPage_CitiesEditing = new TabPage();
 			Btn_Connect = new Button();
 			Btn_Disconnect = new Button();
 			TabControl_Main.SuspendLayout();
@@ -75,7 +75,7 @@
 			groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)Dgv_QueriesPart1).BeginInit();
 			TabPage_Editing.SuspendLayout();
-			tabControl3.SuspendLayout();
+			TabControl_Editing.SuspendLayout();
 			SuspendLayout();
 			// 
 			// TabControl_Main
@@ -344,7 +344,7 @@
 			// 
 			// TabPage_Editing
 			// 
-			TabPage_Editing.Controls.Add(tabControl3);
+			TabPage_Editing.Controls.Add(TabControl_Editing);
 			TabPage_Editing.Location = new Point(4, 24);
 			TabPage_Editing.Name = "TabPage_Editing";
 			TabPage_Editing.Padding = new Padding(3);
@@ -353,35 +353,35 @@
 			TabPage_Editing.Text = "Editing";
 			TabPage_Editing.UseVisualStyleBackColor = true;
 			// 
-			// tabControl3
+			// TabControl_Editing
 			// 
-			tabControl3.Controls.Add(tabPage5);
-			tabControl3.Controls.Add(tabPage6);
-			tabControl3.Location = new Point(6, 6);
-			tabControl3.Name = "tabControl3";
-			tabControl3.SelectedIndex = 0;
-			tabControl3.Size = new Size(1127, 684);
-			tabControl3.TabIndex = 0;
+			TabControl_Editing.Controls.Add(TabPage_CountriesEditing);
+			TabControl_Editing.Controls.Add(TabPage_CitiesEditing);
+			TabControl_Editing.Location = new Point(6, 6);
+			TabControl_Editing.Name = "TabControl_Editing";
+			TabControl_Editing.SelectedIndex = 0;
+			TabControl_Editing.Size = new Size(1127, 684);
+			TabControl_Editing.TabIndex = 0;
 			// 
-			// tabPage5
+			// TabPage_CountriesEditing
 			// 
-			tabPage5.Location = new Point(4, 24);
-			tabPage5.Name = "tabPage5";
-			tabPage5.Padding = new Padding(3);
-			tabPage5.Size = new Size(1119, 656);
-			tabPage5.TabIndex = 0;
-			tabPage5.Text = "tabPage5";
-			tabPage5.UseVisualStyleBackColor = true;
+			TabPage_CountriesEditing.Location = new Point(4, 24);
+			TabPage_CountriesEditing.Name = "TabPage_CountriesEditing";
+			TabPage_CountriesEditing.Padding = new Padding(3);
+			TabPage_CountriesEditing.Size = new Size(1119, 656);
+			TabPage_CountriesEditing.TabIndex = 0;
+			TabPage_CountriesEditing.Text = "Countries";
+			TabPage_CountriesEditing.UseVisualStyleBackColor = true;
 			// 
-			// tabPage6
+			// TabPage_CitiesEditing
 			// 
-			tabPage6.Location = new Point(4, 24);
-			tabPage6.Name = "tabPage6";
-			tabPage6.Padding = new Padding(3);
-			tabPage6.Size = new Size(1119, 656);
-			tabPage6.TabIndex = 1;
-			tabPage6.Text = "tabPage6";
-			tabPage6.UseVisualStyleBackColor = true;
+			TabPage_CitiesEditing.Location = new Point(4, 24);
+			TabPage_CitiesEditing.Name = "TabPage_CitiesEditing";
+			TabPage_CitiesEditing.Padding = new Padding(3);
+			TabPage_CitiesEditing.Size = new Size(1119, 656);
+			TabPage_CitiesEditing.TabIndex = 1;
+			TabPage_CitiesEditing.Text = "Cities";
+			TabPage_CitiesEditing.UseVisualStyleBackColor = true;
 			// 
 			// Btn_Connect
 			// 
@@ -432,7 +432,7 @@
 			groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)Dgv_QueriesPart1).EndInit();
 			TabPage_Editing.ResumeLayout(false);
-			tabControl3.ResumeLayout(false);
+			TabControl_Editing.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
@@ -443,9 +443,9 @@
 		private TabControl TabControl_Queries;
 		private TabPage TabPage_QuriesPart1;
 		private TabPage TabPage_Editing;
-		private TabControl tabControl3;
-		private TabPage tabPage5;
-		private TabPage tabPage6;
+		private TabControl TabControl_Editing;
+		private TabPage TabPage_CountriesEditing;
+		private TabPage TabPage_CitiesEditing;
 		private DataGridView Dgv_QueriesPart1;
 		private Button Btn_Connect;
 		private Button Btn_Disconnect;
