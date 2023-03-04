@@ -16,7 +16,6 @@ namespace ChatClient
 	{
 		//ЩОБ ПРОЕКТ ЗАПУСТИВСЯ ПРАВИЛЬНО, ПОТРІБНО СПОЧАТКУ ЗАПУСТИТИ ПРОЄКТ "ChatHost" ВІД ІМЕНІ АДМІНІСТРАТОРА,
 		//А ПОТІМ ВЖЕ "ChatClient"(можна вже не від імені адміністратора)
-		//також вибачаюсь за трохи брудний код, спішив просто
 
 		private readonly Chat_App _app = new Chat_App();
 		private bool isConnected = false;
