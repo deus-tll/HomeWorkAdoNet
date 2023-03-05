@@ -19,13 +19,16 @@ namespace MailingList_Application
 		}
 
 
-		private void ShrinkDataGridColumns()
+		private void ShrinkDataGridColumns(DataGridView dgv)
 		{
-			int columnCount = Dgv_QueriesPart1.ColumnCount;
+			int columnCount = dgv.ColumnCount;
 
-			for (int i = columnCount / 2; i < columnCount; i++)
+			for (int i = columnCount / 2; i < columnCount;)
 			{
-				Dgv_QueriesPart1.Columns.RemoveAt(i);
+				dgv.Columns.RemoveAt(i);
+
+				if (dgv.Columns.Count == i)
+					return;
 			}
 		}
 
@@ -49,49 +52,55 @@ namespace MailingList_Application
 		#region Queries Part 1
 		private async void Btn_GetAllCustomers_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCustomers();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
 		private async void Btn_GetAllCustomersEmails_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCustomersEmails();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
 		private async void Btn_GetAllSections_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllSections();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
 		private async void Btn_GetAllSharesProducts_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllSharesProducts();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
 		private async void Btn_GetAllCities_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCities();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
 		private async void Btn_GetAllCountries_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCountries();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
@@ -99,9 +108,10 @@ namespace MailingList_Application
 		{
 			if (string.IsNullOrEmpty(TextBox_GetAllCustomersByCity.Text)) return;
 
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCustomersByCity(TextBox_GetAllCustomersByCity.Text);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
@@ -109,9 +119,10 @@ namespace MailingList_Application
 		{
 			if (string.IsNullOrEmpty(TextBox_GetAllCustomersByCountry.Text)) return;
 
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllCustomersByCountry(TextBox_GetAllCustomersByCountry.Text);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 
 
@@ -119,9 +130,10 @@ namespace MailingList_Application
 		{
 			if (string.IsNullOrEmpty(TextBox_GetAllSharesByCountry.Text)) return;
 
+			Dgv_QueriesPart1.DataSource = null;
 			Dgv_QueriesPart1.DataSource = await DB.GetAllSharesByCountry(TextBox_GetAllSharesByCountry.Text);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart1);
 		}
 		#endregion
 
@@ -129,33 +141,37 @@ namespace MailingList_Application
 		#region Queries Part 2
 		private async void Btn_GetCountCustomersInEachCity_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetCountCustomersInEachCity();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetCountCustomersInEachCountry_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetCountCustomersInEachCountry();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetCountCitiesInEachCountry_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetCountCitiesInEachCountry();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetAverageCountOfCitiesByAllCountry_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetAverageCountOfCitiesByAllCountry();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
@@ -167,9 +183,10 @@ namespace MailingList_Application
 			if (string.IsNullOrEmpty(country) ||
 				string.IsNullOrEmpty(email)) return;
 
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetSectionsCertCustomersFromCertCountryInterested(country, email);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
@@ -181,9 +198,10 @@ namespace MailingList_Application
 
 			if (string.IsNullOrEmpty(section)) return;
 
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetSharesProductsCertSectionInRangeDate(section, start, end);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
@@ -193,41 +211,46 @@ namespace MailingList_Application
 
 			if (string.IsNullOrEmpty(email)) return;
 
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetSharesProductsCertCustomer(email);
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetTop3CountryByCountOfCustomers_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetTop3CountryByCountOfCustomers();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetTop1CountryByCountOfCustomers_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetTop1CountryByCountOfCustomers();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
 		private async void Btn_GetTop3CityByCountOfCustomers_Click(object sender, EventArgs e)
 		{
+			Dgv_QueriesPart2.DataSource = null;
 			Dgv_QueriesPart2.DataSource = await DB.GetTop3CityByCountOfCustomers();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 
 
-		private void Btn_GetTop1CityByCountOfCustomers_Click(object sender, EventArgs e)
+		private async void Btn_GetTop1CityByCountOfCustomers_Click(object sender, EventArgs e)
 		{
-			Dgv_QueriesPart2.DataSource = DB.GetTop1CityByCountOfCustomers();
+			Dgv_QueriesPart2.DataSource = null;
+			Dgv_QueriesPart2.DataSource = await DB.GetTop1CityByCountOfCustomers();
 
-			ShrinkDataGridColumns();
+			ShrinkDataGridColumns(Dgv_QueriesPart2);
 		}
 		#endregion
 	}

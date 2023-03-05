@@ -104,15 +104,24 @@
 
 --Task 3
 /* 1.)
-create function GetAllCustomers()
+alter function GetAllCustomers()
 returns table
 as
 	return(
-		select *
-		from [Customers]
+		select
+			C.[Name],
+			C.[Surname],
+			C.[Patronymic],
+			C.[Email],
+			C.[Gender],
+			C.[Birth],
+			Ci.[Name] as [City],
+			Co.[Name] as [Country]
+		from [Customers] as C
+		join [Cities] as Ci on C.[CityID] = Ci.[ID]
+		join [Countries] as Co on Ci.[CountryID] = Co.[ID]
 	);
 */
-
 
 /* 2.)
 create function GetAllCustomersEmails()
@@ -296,11 +305,10 @@ as
 
 -- 4.)
 --create function GetAverageCountOfCitiesByAllCountry()
---returns int
+--returns @resTable table([Avg] int)
 --as
 --begin
 --	declare @table table ([Country] nvarchar(100), [Count] int);
---	declare @res int = 0;
 	
 --	insert into @table
 --	select distinct
@@ -312,12 +320,13 @@ as
 --	group by
 --		Coun.[Name];
 
+--	insert into @resTable
 --	select
---		@res = Avg([Count])
+--		Avg([Count])
 --	from
 --		@table
 
---	return @res;
+--	return
 --end
 
 
